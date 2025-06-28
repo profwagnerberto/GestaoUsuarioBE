@@ -6,7 +6,6 @@ const mongoose = require("mongoose");
 const PORT = process.env.PORT || 5000;
 
 app.use(bodyParser.urlencoded({ extended: false }));
-
 app.use(bodyParser.json());
 
 require("dotenv").config({ silent: true });
@@ -49,10 +48,6 @@ function authenticate(requser, usuario) {
   return false;
 }
 
-app.get("/", (req, res) => {
-  res.send("A API está funcionando.");
-});
-
 app.options("/", (req, res) => {
   res.send({
     GET: {
@@ -75,6 +70,10 @@ app.options("/", (req, res) => {
   });
 });
 
+app.get("/", (req, res) => {
+  res.send("A API está funcionando.");
+});
+
 app.get("/getall", verificarToken, async (req, res) => {
   const usuarios = await Usuario.find({});
   res.send(usuarios);
@@ -94,8 +93,8 @@ app.post("/insert", async (req, res) => {
       }
     },
     function (err) {
-      console.log(err);
-      res.send({ status: 500, message: "Erro internal do servidor." });
+      // res.status(500).send({ message: "Erro interno do servidor." });
+      res.status(500).send(err);
     }
   );
 });
@@ -118,7 +117,8 @@ app.post("/login", async (req, res) => {
     );
     res.send({ status: 200, message: "Autenticado.", token });
   } catch (err) {
-    res.status(500).send({ message: "Erro interno do servidor." });
+    // res.status(500).send({ message: "Erro interno do servidor." });
+    res.status(500).send( err );
   }
 });
 
@@ -150,8 +150,8 @@ app.put("/update", async (req, res) => {
               }
             },
             function (err) {
-              console.log(err);
-              res.send({ status: 500, message: "Erro interno do servidor." });
+              // res.status(500).send({ message: "Erro interno do servidor." });
+              res.status(500).send(err);
             }
           );
       } else {
@@ -159,7 +159,8 @@ app.put("/update", async (req, res) => {
       }
     })
     .catch(function (err) {
-      res.send({ status: 500, message: "Erro interno do servidor." });
+      // res.status(500).send({ message: "Erro interno do servidor." });
+      res.status(500).send(err);
     });
 });
 
@@ -182,8 +183,8 @@ app.delete("/delete", verificarToken, async (req, res) => {
               }
             },
             function (err) {
-              console.log(err);
-              res.send({ status: 500, message: "Erro interno do servidor." });
+              // res.status(500).send({ message: "Erro interno do servidor." });
+              res.status(500).send(err);
             }
           );
       } else {
@@ -191,7 +192,8 @@ app.delete("/delete", verificarToken, async (req, res) => {
       }
     })
     .catch(function (err) {
-      res.send({ status: 500, message: "Erro interno do servidor." });
+      // res.status(500).send({ message: "Erro interno do servidor." });
+      res.status(500).send(err);
     });
 });
 
