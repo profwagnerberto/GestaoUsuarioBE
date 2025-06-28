@@ -118,6 +118,7 @@ app.post("/login", async (req, res) => {
     res.send({ status: 200, message: "Autenticado.", token });
   } catch (err) {
     // res.status(500).send({ message: "Erro interno do servidor." });
+    console.log(err);
     res.status(500).send( err );
   }
 });
@@ -160,6 +161,7 @@ app.put("/update", async (req, res) => {
     })
     .catch(function (err) {
       // res.status(500).send({ message: "Erro interno do servidor." });
+      console.log(err);
       res.status(500).send(err);
     });
 });
@@ -193,6 +195,7 @@ app.delete("/delete", verificarToken, async (req, res) => {
     })
     .catch(function (err) {
       // res.status(500).send({ message: "Erro interno do servidor." });
+      console.log(err);
       res.status(500).send(err);
     });
 });
